@@ -6,7 +6,7 @@ const router = Router();
 
 
 router.get('/posts', findPosts)
-router.get('/post', findOnePostByID)
+router.get('/posts/:id', findOnePostByID)
 
 
 export { router };
