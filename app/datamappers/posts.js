@@ -1,13 +1,10 @@
 import { client } from '../services/dbClient.js';
-import { CoreDataMapper } from './coreDatamapper.js';
+import { CoreDataMapper } from './CoreDatamapper.js';
 
 
 class PostDatamapper extends CoreDataMapper {
 
-  databaseName = 'blog';
-  collectionName = 'posts';
-
 }
 
-const Post = new PostDatamapper(client);
+const Post = new PostDatamapper(client, 'posts');
 export { Post }

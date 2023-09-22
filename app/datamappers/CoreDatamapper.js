@@ -1,18 +1,9 @@
 import { ObjectId } from 'mongodb';
 
 class CoreDataMapper {
-  constructor(client) {
+  constructor(client, collectionName) {
     this.client = client;
-  }
-
-  async connect() {
-    try {
-      await this.client.connect();
-      this.collection = this.client.db(this.databaseName).collection(this.collectionName);
-
-    } catch (error) {
-      throw error;
-    }
+    this.collection = this.client.db().collection(collectionName)
   }
 
   async disconnect() {
@@ -22,7 +13,7 @@ class CoreDataMapper {
   async create(inputData) {
     try {
       if (Array.isArray(inputData)) {
-        const result = await this.collection(this.collectionName).insertMany(inputData);
+        const result = await this.collection.insertMany(inputData);
         return result.insertedIds;
       } else {
         const result = await this.collection.insertOne(inputData);
@@ -34,7 +25,6 @@ class CoreDataMapper {
   }
 
   async findAll() {
-    console.log("Je passe par la ");
     try {
       const result = await this.collection.find().toArray();
       return result;
@@ -53,6 +43,7 @@ class CoreDataMapper {
   }
 
   async update(id, inputData) {
+
     try {
       const result = await this.collection.updateOne(
         { _id: new ObjectId(id) },
@@ -75,3 +66,4 @@ class CoreDataMapper {
 }
 
 export { CoreDataMapper };
+
